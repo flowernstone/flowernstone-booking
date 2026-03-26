@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)file:///C:/Users/user/Downloads/index_1.html -->
+<html lang="zh-TW" style="color-scheme: light; --liff-base-background-color: #FFFFFF; --liff-base-text-color: #000000; --liff-base-background-rgb-color: 255, 255, 255; --liff-base-text-rgb-color: 0, 0, 0; --liff-light-button-border-color: rgba(0, 0, 0, 0.15); --liff-title-text-color: #111111; --liff-title-background-color: #FFFFFF; --liff-title-button-color: #111111; --liff-icon-color: #111111; --liff-status-bar-color: black; --liff-title-subtext-color: #B7B7B7; --liff-progress-bar-color: #06C755; --liff-progress-background-color: #FFFFFF; --liff-title-button-area-background-color: rgba(255, 255, 255, 0.12); --liff-title-button-area-border-color: rgba(0, 0, 0, 0.15);"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>花石間 線上訂位</title>
+<script src="./index_files/sdk.js.下載"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+:root {
+  --green-dark:#1B4332;--green-mid:#2D6A4F;--green-pale:#D8F3DC;
+  --amber:#E9A84C;--amber-light:#FFF3DC;--gray-light:#F4F4F2;
+  --gray-mid:#9E9E9E;--red-light:#FFE8E8;--red-dark:#C62828;
+  --text-dark:#1A1A1A;--text-mid:#555;--white:#FFFFFF;--radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--gray-light);color:var(--text-dark);min-height:100vh;}
+.header{background:var(--green-dark);padding:16px 16px 12px;position:sticky;top:0;z-index:100;}
+.header-title{color:#fff;font-size:20px;font-weight:700;letter-spacing:1px;}
+.header-sub{color:#9FE1CB;font-size:12px;margin-top:2px;}
+.tabs{background:var(--green-mid);display:flex;}
+.tab{flex:1;padding:12px 0;text-align:center;font-size:13px;font-weight:500;color:rgba(255,255,255,0.55);border-bottom:3px solid transparent;cursor:pointer;}
+.tab.active{color:#fff;font-weight:700;border-bottom-color:var(--amber);}
+.page{display:none;padding:12px;padding-bottom:40px;}
+.page.active{display:block;}
+.card{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:10px;border:0.5px solid #E8E8E6;}
+.card-title{font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:1px;margin-bottom:10px;}
+.section-label{font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:1px;margin:12px 0 8px;}
+.btn-primary{width:100%;padding:14px;background:var(--green-mid);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;}
+.btn-primary:active{background:var(--green-dark);}
+.btn-primary:disabled{background:var(--gray-mid);cursor:not-allowed;}
+.btn-danger{width:100%;padding:10px;background:none;border:1.5px solid var(--red-dark);border-radius:8px;font-size:13px;font-weight:700;color:var(--red-dark);font-family:inherit;cursor:pointer;margin-top:10px;}
+.info-section{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:10px;border:0.5px solid #E8E8E6;}
+.info-bar{width:4px;height:16px;background:var(--green-mid);border-radius:2px;flex-shrink:0;}
+.info-text{font-size:12px;color:#444;line-height:1.9;}
+.info-item{display:flex;gap:6px;margin-bottom:4px;}
+.info-item-dot{color:var(--green-mid);flex-shrink:0;font-weight:700;}
+.refund-row{display:flex;justify-content:space-between;align-items:center;border-radius:8px;padding:9px 12px;margin-bottom:6px;}
+.month-nav{background:var(--green-mid);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;}
+.month-nav-btn{color:rgba(255,255,255,0.7);font-size:24px;cursor:pointer;padding:0 8px;background:none;border:none;line-height:1;}
+.month-label{color:#fff;font-size:15px;font-weight:700;}
+.date-card{background:var(--white);border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;border:0.5px solid #E8E8E6;}
+.date-card.full{opacity:0.5;background:#F9F9F9;}
+.date-name{font-size:16px;font-weight:700;}
+.date-tags{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.tag-available{background:var(--green-pale);color:var(--green-dark);}
+.tag-full{background:var(--red-light);color:var(--red-dark);}
+.tag-holiday{background:var(--amber-light);color:#7A5C00;}
+.tag-upcoming{background:var(--green-pale);color:var(--green-dark);}
+.tag-ended{background:#F0F0F0;color:var(--gray-mid);}
+.tag-cancelled{background:var(--red-light);color:var(--red-dark);}
+.btn-select{background:var(--green-mid);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:10px;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.btn-select:disabled{background:#E0E0E0;cursor:not-allowed;}
+.campsite-row{background:var(--white);border-radius:10px;padding:12px 14px;margin-bottom:6px;border:0.5px solid #E8E8E6;}
+.campsite-row.selected{border:2px solid var(--green-mid);}
+.campsite-row.sold-out{opacity:0.5;background:#F9F9F9;}
+.campsite-info{display:flex;justify-content:space-between;align-items:center;}
+.campsite-name{font-size:14px;font-weight:700;}
+.campsite-sub{font-size:11px;color:var(--gray-mid);margin-top:2px;}
+.campsite-price{font-size:14px;font-weight:700;color:var(--amber);}
+.qty-control{display:flex;align-items:center;gap:10px;margin-top:10px;justify-content:flex-end;}
+.qty-btn{width:30px;height:30px;border-radius:6px;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;}
+.qty-btn.minus{background:var(--gray-light);color:var(--gray-mid);}
+.qty-btn.minus.active{background:var(--green-pale);color:var(--green-mid);}
+.qty-btn.plus{background:var(--green-pale);color:var(--green-mid);}
+.qty-btn.plus:disabled{background:var(--gray-light);color:var(--gray-mid);cursor:not-allowed;}
+.qty-num{font-size:16px;font-weight:700;min-width:20px;text-align:center;}
+.bottom-bar{background:var(--white);padding:12px 16px;border-top:0.5px solid #E8E8E6;position:sticky;bottom:0;}
+.summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
+.summary-row.total{border-top:0.5px solid #E8E8E6;padding-top:8px;margin-top:4px;}
+.summary-row.total span:first-child{font-size:14px;font-weight:700;}
+.summary-row.total span:last-child{font-size:18px;font-weight:700;color:var(--amber);}
+.form-label{font-size:12px;color:var(--text-mid);margin-bottom:5px;display:block;}
+.form-input{width:100%;padding:11px 12px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:14px;font-family:inherit;color:var(--text-dark);outline:none;background:var(--white);}
+.form-input:focus{border-color:#52B788;}
+textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
+.form-row{margin-bottom:12px;}
+.booking-card{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:10px;border:0.5px solid #E8E8E6;}
+.booking-card.past{opacity:0.6;background:#F9F9F9;}
+.booking-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.booking-date{font-size:15px;font-weight:700;}
+.booking-id-text{font-size:11px;color:var(--gray-mid);margin-top:2px;}
+.booking-detail-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+.booking-detail-row span:first-child{color:var(--text-mid);}
+.booking-detail-row.total{border-top:0.5px solid #F0F0F0;padding-top:6px;margin-top:2px;}
+.booking-detail-row.total span{font-weight:700;}
+.booking-detail-row.total span:last-child{color:var(--amber);font-size:15px;}
+.loading{text-align:center;padding:48px 20px;color:var(--gray-mid);}
+.spinner{width:32px;height:32px;border:3px solid var(--green-pale);border-top-color:var(--green-mid);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty{text-align:center;padding:48px 20px;color:var(--gray-mid);font-size:14px;}
+.search-divider{display:flex;align-items:center;gap:8px;margin:12px 0;}
+.search-divider-line{flex:1;height:0.5px;background:#E0E0E0;}
+.success-center{text-align:center;padding:24px 0 16px;}
+.success-icon{width:64px;height:64px;background:var(--green-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.success-check{width:28px;height:16px;border-left:3px solid var(--green-mid);border-bottom:3px solid var(--green-mid);transform:rotate(-45deg) translate(3px,-3px);}
+.booking-id-box{background:var(--green-dark);border-radius:var(--radius);padding:12px 16px;margin-bottom:12px;text-align:center;}
+.booking-id-label{font-size:11px;color:#9FE1CB;letter-spacing:1px;margin-bottom:4px;}
+.booking-id-value{font-size:18px;font-weight:700;color:#fff;letter-spacing:2px;}
+.transfer-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">花石間</div>
+  <div class="header-sub" id="user-greeting">線上營位預約</div>
+</div>
+
+<!-- 說明頁 -->
+<div id="page-info" style="padding:12px;padding-bottom:40px;">
+  <div class="info-section" style="margin-top:4px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">進退場時間</span></div>
+    <div class="info-text">
+      <div class="info-item"><span class="info-item-dot">·</span><span>營業時間：週六至週日及特殊節慶連續假日（見紅就營業）</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>第一天進場：10:00 以後；連假第二天進場者請於 13:00 以後進場</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>離營時間：假日期間 11:00 前；連假最後一天 13:00 前</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>夜衝：僅限隔日續住者，入營時間 18:00–22:00，需提前告知。連假前一晚夜衝半價，連假期間夜衝原價</span></div>
+    </div>
+  </div>
+  <div class="info-section">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">草皮營區</span></div>
+    <div class="info-text">
+      <div class="info-item"><span class="info-item-dot">·</span><span>每帳 4 人，每多一人酌收 $200（幼稚園以下孩童免費）；一帳 1 車，每多一車酌收 $200（現場不一定有足夠的停車位）。若您欲自行增加帳數，則每多一帳酌收 $800。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>預約後三日內需完成匯款全額，匯款完成請告知匯款帳戶後五碼。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>連假前一晚夜衝半價（夜衝當天並不是假日），連假期間夜衝原價。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>同一層的小包區位置為在同一平面劃分，無圍籬、植被或高度落差作為隔間，並共用該層浴廁。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>歡迎包區，相關事宜歡迎來電洽談。</span></div>
+    </div>
+  </div>
+  <div class="info-section">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">輕露營小屋區</span></div>
+    <div class="info-text">
+      <div class="info-item"><span class="info-item-dot">·</span><span>無附早餐，三間小屋共用浴廁。室內附雙人床墊、枕頭、電風扇、茶几，棉被需自備。室外附桌子、椅子。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>預約後三日內需完成匯款全額，匯款完成請告知匯款帳戶後五碼。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>竹亭、梅苑可加 2 人，松風可加 4 人，每多一人酌收 $200（幼稚園以下孩童免費），加人無附設備。</span></div>
+      <div class="info-item"><span class="info-item-dot">·</span><span>小屋夜衝無優惠，按照原價計算。平日也提供預約，歡迎洽詢。</span></div>
+    </div>
+  </div>
+  <div class="info-section">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">營區規定</span></div>
+    <div class="info-text">
+      <div class="info-item"><span class="info-item-dot">1.</span><span>僅限隔日續住者可夜衝，夜衝入營時間為 18:00～22:00，若會早到或晚到請事先通知。</span></div>
+      <div class="info-item"><span class="info-item-dot">2.</span><span>上下裝備後請將車輛停放於指示地點，車輛進出營區時請放慢行駛速度。</span></div>
+      <div class="info-item"><span class="info-item-dot">3.</span><span>營區內禁止吸菸，請有吸菸需求者移動至營區外圍之水泥路入口處。</span></div>
+      <div class="info-item"><span class="info-item-dot">4.</span><span>營區禁止各式煙火、麻將、卡拉 OK 等影響與大自然相處之活動，以維護露友之安寧。</span></div>
+      <div class="info-item"><span class="info-item-dot">5.</span><span>請勿使用負載過量之電器設備，如冷氣機、烘培機、電磁爐、電暖爐、電鍋、電熱水瓶、移動式冷氣等，以免造成斷電或電線設備之損毀，若造成公共設備之毀損須負賠償責任；若因此導致個人器具損壞，營區恕不承擔賠償責任。</span></div>
+      <div class="info-item"><span class="info-item-dot">6.</span><span>嚴禁賭博、施用毒品及一切違法行為，一經獲知立即報警處理，並取消營地之使用。</span></div>
+      <div class="info-item"><span class="info-item-dot">7.</span><span>嚴禁破壞營區公物，違者應負賠償責任。</span></div>
+      <div class="info-item"><span class="info-item-dot">8.</span><span>為避免草皮燙傷或枯死，請勿將過熱之物品直接放置在草皮上，進行烤肉活動時熱源請離地 30cm 以上。熱鍋熱水請勿直接倒在草皮及護草墊上，並請使用隔熱器具，若造成草皮毀損須負賠償責任。</span></div>
+      <div class="info-item"><span class="info-item-dot">9.</span><span>營區提供黑色地墊鋪設，以維護露營用品及保護草皮；地墊及睡袋等如需曝曬，請曬於圍欄四周或用桌椅墊高，避免草皮悶熱枯黃。</span></div>
+      <div class="info-item"><span class="info-item-dot">10.</span><span>草皮區請勿停車。（如有特殊需求請事先洽詢）</span></div>
+      <div class="info-item"><span class="info-item-dot">11.</span><span>營區請勿使用大型天幕，並斟酌使用客廳帳及天幕。</span></div>
+      <div class="info-item"><span class="info-item-dot">12.</span><span>草皮如受損嚴重或連日大雨，會視情況選擇休園，或更動行駛路線。</span></div>
+      <div class="info-item"><span class="info-item-dot">13.</span><span>輕露營小屋區室內外嚴禁吸菸、焚燒明火與烤肉。</span></div>
+      <div class="info-item"><span class="info-item-dot">14.</span><span>每層都有設置垃圾桶，請您秉持無痕森林之意念、垃圾不落地，確實做好分類。</span></div>
+      <div class="info-item"><span class="info-item-dot">15.</span><span>攜帶寵物入園請自行處理排泄物，請勿讓寵物跑到他人營位，寵物須隨時有人看管，若是造成任何糾紛，本營區不負任何責任。</span></div>
+      <div class="info-item"><span class="info-item-dot">16.</span><span>請家長們時時提醒孩子注意安全，切勿跨越圍籬、丟石子等危險情況。</span></div>
+      <div class="info-item"><span class="info-item-dot">17.</span><span>山林之中取水不易，請節約用水，愛地球。</span></div>
+      <div class="info-item"><span class="info-item-dot">18.</span><span>營區浴室 24 小時提供熱水，但避免影響左鄰右舍休息，請於晚間 11:00 前盥洗完畢。</span></div>
+      <div class="info-item"><span class="info-item-dot">19.</span><span>音量管制時間為晚上十點至早上八點，請降低音量、輕聲細語，若經勸導兩次以上尚未改善，即取消露營權益且不退款。</span></div>
+      <div class="info-item"><span class="info-item-dot">20.</span><span>營區土地有限，停車不易，請遵守一車一帳之規定；來訪之遊客每車、每人收兩百。</span></div>
+    </div>
+  </div>
+  <div class="info-section">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">人為因素退訂須知</span></div>
+    <div class="refund-row" style="background:var(--green-pale);"><span style="font-size:12px;font-weight:500;color:var(--green-dark);">14 天前取消</span><span style="font-size:12px;font-weight:700;color:var(--green-dark);">退 100%，或保留權益 3 個月</span></div>
+    <div class="refund-row" style="background:var(--amber-light);"><span style="font-size:12px;font-weight:500;color:#7A5C00;">7–13 天前取消</span><span style="font-size:12px;font-weight:700;color:#7A5C00;">退 50%，或保留權益 3 個月</span></div>
+    <div class="refund-row" style="background:var(--red-light);"><span style="font-size:12px;font-weight:500;color:var(--red-dark);">0–6 天前取消</span><span style="font-size:12px;font-weight:700;color:var(--red-dark);">沒收訂金，不可保留權益</span></div>
+  </div>
+  <div class="info-section">
+    <div class="info-text">請各位露友遵守以上之規定，共創美好回憶，如不遵守且屢勸不聽者，營主有權請之離席。<br><br>如有不適當之處，本營區保留修改、終止、變更內容細節之權利。</div>
+    <div style="background:var(--gray-light);border-radius:8px;padding:10px 12px;margin-top:10px;">
+      <div style="font-size:11px;color:var(--gray-mid);margin-bottom:6px;">如有問題歡迎聯繫</div>
+      <div style="font-size:13px;font-weight:700;">LINE：@xxc3763j</div>
+      <div style="font-size:13px;font-weight:700;">電話：0933-152-018 余小姐</div>
+    </div>
+  </div>
+  <button class="btn-primary" onclick="agreeAndStart()" style="margin-top:4px;">我已閱讀並同意以上規定，開始預約</button>
+</div>
+
+<!-- 主 Tab 頁面 -->
+<div id="main-app" style="display:none;">
+  <div class="tabs">
+    <div class="tab active" id="tab-search" onclick="switchTab(&#39;search&#39;)">查詢訂位</div>
+    <div class="tab" id="tab-mybookings" onclick="switchTab(&#39;mybookings&#39;)">我的訂單</div>
+  </div>
+  <div class="page active" id="page-search">
+    <div style="margin:-12px -12px 12px;">
+      <div class="month-nav">
+        <button class="month-nav-btn" onclick="changeMonth(-1)">‹</button>
+        <div class="month-label" id="month-label">載入中...</div>
+        <button class="month-nav-btn" onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="section-label">可預約日期</div>
+    <div id="date-list"><div class="loading"><div class="spinner"></div>載入中...</div></div>
+  </div>
+  <div class="page" id="page-mybookings">
+    <div id="mybookings-content" style="margin-top:4px;"></div>
+  </div>
+</div>
+
+<!-- 選營位頁 -->
+<div id="page-campsite" style="display:none;">
+  <div class="header" style="position:relative;">
+    <div style="font-size:12px;color:#9FE1CB;" id="campsite-date-label"></div>
+    <div style="font-size:17px;font-weight:700;color:#fff;margin-top:2px;">選擇營位</div>
+    <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;" onclick="showDatePage()">← 返回</div>
+  </div>
+  <div style="padding:12px;padding-bottom:130px;" id="campsite-list"></div>
+  <div class="bottom-bar">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div>
+        <div style="font-size:12px;color:var(--gray-mid);">已選</div>
+        <div style="font-size:13px;font-weight:700;max-width:200px;" id="bottom-selected-text">尚未選擇任何營位</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px;color:var(--gray-mid);">小計</div>
+        <div style="font-size:20px;font-weight:700;color:var(--amber);" id="bottom-total">NT$0</div>
+      </div>
+    </div>
+    <button class="btn-primary" id="btn-next-step" onclick="showFormPage()" disabled="">下一步：填寫資料</button>
+  </div>
+</div>
+
+<!-- 填寫資料頁 -->
+<div id="page-form" style="display:none;">
+  <div class="header" style="position:relative;">
+    <div style="font-size:12px;color:#9FE1CB;" id="form-date-label"></div>
+    <div style="font-size:17px;font-weight:700;color:#fff;margin-top:2px;">填寫訂位資料</div>
+    <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;" onclick="showCampsitePage()">← 返回</div>
+  </div>
+  <div style="padding:12px;padding-bottom:40px;">
+    <div class="card"><div class="card-title">訂位摘要</div><div id="form-summary"></div></div>
+    <div class="card">
+      <div class="card-title">聯絡資料</div>
+      <div class="form-row"><label class="form-label">姓名 <span style="color:var(--red-dark);">*</span></label><input type="text" class="form-input" id="form-name" placeholder="請輸入姓名"></div>
+      <div class="form-row"><label class="form-label">聯絡電話 <span style="color:var(--red-dark);">*</span></label><input type="tel" class="form-input" id="form-phone" placeholder="0912-345-678"></div>
+      <div class="form-row"><label class="form-label">備註 <span style="color:var(--gray-mid);font-size:11px;">（選填）</span></label><textarea class="form-input" id="form-notes" placeholder="如有加人、加車、加帳、寵物、夜衝需求，請在此說明
+加人 $200／加車 $200／加帳 $800"></textarea></div>
+    </div>
+    <div style="background:var(--amber-light);border:0.5px solid var(--amber);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+      <div style="font-size:12px;font-weight:700;color:#7A5C00;margin-bottom:4px;">匯款提醒</div>
+      <div style="font-size:12px;color:#7A5C00;line-height:1.8;">訂位送出後請於 <strong>3 日內</strong>完成匯款全額，匯款後請告知帳號後 <strong>5 碼</strong>，逾期視同放棄訂位。</div>
+    </div>
+    <button class="btn-primary" id="btn-submit" onclick="submitBooking()">送出訂位</button>
+  </div>
+</div>
+
+<!-- 訂位完成頁 -->
+<div id="page-success" style="display:none;padding:12px;padding-bottom:40px;">
+  <div class="card" style="margin-top:4px;">
+    <div class="success-center">
+      <div class="success-icon"><div class="success-check"></div></div>
+      <div style="font-size:22px;font-weight:700;color:var(--green-dark);">訂位成功！</div>
+      <div style="font-size:13px;color:var(--gray-mid);margin-top:4px;">確認通知已傳送至您的 LINE</div>
+    </div>
+    <div class="booking-id-box"><div class="booking-id-label">訂單編號</div><div class="booking-id-value" id="success-booking-id"></div></div>
+    <div class="card-title">訂位明細</div>
+    <div id="success-detail"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">匯款資訊</div>
+    <div id="transfer-info"></div>
+    <div style="background:var(--gray-light);border-radius:8px;padding:10px 12px;margin-top:10px;">
+      <div style="font-size:12px;color:var(--text-mid);line-height:1.8;">請於 <strong style="color:var(--text-dark);">3 日內</strong>完成匯款全額，匯款後請在 LINE 上告知帳號後 <strong style="color:var(--text-dark);">5 碼</strong>，逾期視同放棄訂位。</div>
+    </div>
+  </div>
+  <button class="btn-primary" onclick="goToMyBookings()">查看我的訂單</button>
+</div>
+
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbyN43BgosWuDsn1ooTzGuWy-1p7SgPA6J7DunoNQGm1P33rkLOO3clc5Z_ttetCTyE99g/exec';
+const LIFF_ID='2009610108-WHEPYZcc';
+let lineProfile=null,currentYear=new Date().getFullYear(),currentMonth=new Date().getMonth()+1;
+let selectedDate=null,campsiteData=[],selections={},settings={};
+
+async function init(){
+  try{
+    await liff.init({liffId:LIFF_ID});
+    if(liff.isLoggedIn()){lineProfile=await liff.getProfile();document.getElementById('user-greeting').textContent='歡迎，'+lineProfile.displayName;}
+    const r=await fetch(API_URL+'?action=getSettings');
+    const d=await r.json();
+    if(d.success)settings=d.settings;
+  }catch(e){console.log(e);}
+}
+
+function agreeAndStart(){
+  document.getElementById('page-info').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  loadDates();
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  if(tab==='search'){document.getElementById('tab-search').classList.add('active');document.getElementById('page-search').classList.add('active');}
+  else{document.getElementById('tab-mybookings').classList.add('active');document.getElementById('page-mybookings').classList.add('active');loadMyBookings();}
+}
+
+function changeMonth(dir){
+  currentMonth+=dir;
+  if(currentMonth>12){currentMonth=1;currentYear++;}
+  if(currentMonth<1){currentMonth=12;currentYear--;}
+  loadDates();
+}
+
+async function loadDates(){
+  document.getElementById('month-label').textContent=currentYear+' 年 '+currentMonth+' 月';
+  document.getElementById('date-list').innerHTML='<div class="loading"><div class="spinner"></div>載入中...</div>';
+  try{
+    const r=await fetch(API_URL+'?action=getDates&year='+currentYear+'&month='+String(currentMonth).padStart(2,'0'));
+    const d=await r.json();
+    if(!d.success||!d.dates.length){document.getElementById('date-list').innerHTML='<div class="empty">本月尚無可預約日期<br>請切換至其他月份</div>';return;}
+    const days=['日','一','二','三','四','五','六'];
+    let html='';
+    d.dates.forEach(dt=>{
+      const p=dt.date.split('/');
+      const dow=new Date(p[0],p[1]-1,p[2]).getDay();
+      const label=p[1]+'月'+p[2]+'日（'+days[dow]+'）';
+      const hl=dt.isHoliday?'border-left:3px solid var(--amber);border-radius:4px;':'';
+      html+='<div class="date-card" id="dc-'+dt.date+'" style="'+hl+'">';
+      html+='<div><div class="date-name">'+label+'</div><div class="date-tags"><span class="tag tag-available" id="dtag-'+dt.date+'">有空位</span>';
+      if(dt.isHoliday)html+='<span class="tag tag-holiday">連假</span>';
+      html+='</div></div>';
+      html+='<button class="btn-select" id="dbtn-'+dt.date+'" onclick="selectDate(\''+dt.date+'\',\''+label+'\')">選擇</button>';
+      html+='</div>';
+    });
+    document.getElementById('date-list').innerHTML=html;
+    checkDatesAvailability(d.dates);
+  }catch(e){document.getElementById('date-list').innerHTML='<div class="empty">載入失敗，請重試</div>';}
+}
+
+async function checkDatesAvailability(dates){
+  for(const dt of dates){
+    try{
+      const r=await fetch(API_URL+'?action=getAvailability&date='+dt.date);
+      const d=await r.json();
+      if(d.success&&d.campsites.every(c=>c.remaining<=0)){
+        const card=document.getElementById('dc-'+dt.date);
+        const tag=document.getElementById('dtag-'+dt.date);
+        const btn=document.getElementById('dbtn-'+dt.date);
+        if(card)card.classList.add('full');
+        if(tag){tag.className='tag tag-full';tag.textContent='已額滿';}
+        if(btn){btn.disabled=true;btn.textContent='已滿';}
+      }
+    }catch(e){}
+  }
+}
+
+async function selectDate(date,label){
+  selectedDate=date;selections={};
+  document.getElementById('campsite-date-label').textContent=label+' 入場';
+  document.getElementById('form-date-label').textContent=label+' 入場';
+  document.getElementById('main-app').style.display='none';
+  document.getElementById('page-campsite').style.display='block';
+  document.getElementById('campsite-list').innerHTML='<div class="loading"><div class="spinner"></div>載入中...</div>';
+  try{
+    const r=await fetch(API_URL+'?action=getAvailability&date='+date);
+    const d=await r.json();
+    if(!d.success)throw new Error(d.message);
+    campsiteData=d.campsites;
+    renderCampsites();
+  }catch(e){document.getElementById('campsite-list').innerHTML='<div class="empty">載入失敗，請重試</div>';}
+}
+
+function renderCampsites(){
+  const types=['草皮','雨棚','小木屋'];
+  const labels={'草皮':'草皮帳位','雨棚':'雨棚帳位','小木屋':'輕露營小屋'};
+  let html='';
+  types.forEach(type=>{
+    const list=campsiteData.filter(c=>c.type===type);
+    if(!list.length)return;
+    const prices=[...new Set(list.map(c=>c.price))];
+    const ps=prices.length===1?' — NT$'+prices[0].toLocaleString()+' / 帳':'';
+    html+='<div class="section-label">'+labels[type]+ps+'</div>';
+    list.forEach(c=>{
+      const qty=selections[c.id]||0;
+      const full=c.remaining<=0;
+      const sel=qty>0;
+      html+='<div class="campsite-row'+(full?' sold-out':'')+(sel?' selected':'')+'" id="camp-'+c.id+'">';
+      html+='<div class="campsite-info"><div><div class="campsite-name">'+c.name+'</div>';
+      if(full)html+='<div class="campsite-sub" style="color:var(--red-dark);font-weight:700;">已額滿</div>';
+      else html+='<div class="campsite-sub">剩 <span style="color:var(--green-mid);font-weight:700;">'+c.remaining+'</span> 帳</div>';
+      html+='</div>';
+      if(c.type==='小木屋')html+='<div class="campsite-price">NT$'+c.price.toLocaleString()+'</div>';
+      html+='</div>';
+      if(!full){
+        html+='<div class="qty-control">';
+        html+='<button class="qty-btn minus'+(qty>0?' active':'')+'" onclick="changeQty(\''+c.id+'\',-1)"'+(qty===0?' disabled':'')+'>−</button>';
+        html+='<span class="qty-num" id="qty-'+c.id+'">'+qty+'</span>';
+        html+='<button class="qty-btn plus" onclick="changeQty(\''+c.id+'\',1)"'+(qty>=c.remaining?' disabled':'')+'>+</button>';
+        html+='</div>';
+      }
+      html+='</div>';
+    });
+  });
+  document.getElementById('campsite-list').innerHTML=html;
+  updateBottomBar();
+}
+
+function changeQty(id,delta){
+  const c=campsiteData.find(c=>c.id===id);if(!c)return;
+  const cur=selections[id]||0;
+  const nq=Math.max(0,Math.min(c.remaining,cur+delta));
+  if(nq===0)delete selections[id];else selections[id]=nq;
+  document.getElementById('qty-'+id).textContent=nq;
+  const row=document.getElementById('camp-'+id);
+  nq>0?row.classList.add('selected'):row.classList.remove('selected');
+  const mb=row.querySelector('.qty-btn.minus');
+  const pb=row.querySelector('.qty-btn.plus');
+  mb.disabled=nq===0;nq===0?mb.classList.remove('active'):mb.classList.add('active');
+  pb.disabled=nq>=c.remaining;
+  updateBottomBar();
+}
+
+function updateBottomBar(){
+  let total=0,details=[];
+  Object.keys(selections).forEach(id=>{
+    const c=campsiteData.find(c=>c.id===id);
+    if(c&&selections[id]>0){total+=c.price*selections[id];details.push(c.name+' ×'+selections[id]);}
+  });
+  document.getElementById('bottom-total').textContent='NT$'+total.toLocaleString();
+  document.getElementById('bottom-selected-text').textContent=details.length?details.join('、'):'尚未選擇任何營位';
+  document.getElementById('btn-next-step').disabled=details.length===0;
+}
+
+function showDatePage(){document.getElementById('page-campsite').style.display='none';document.getElementById('main-app').style.display='block';document.getElementById('page-search').classList.add('active');}
+function showCampsitePage(){document.getElementById('page-form').style.display='none';document.getElementById('page-campsite').style.display='block';}
+
+function showFormPage(){
+  document.getElementById('page-campsite').style.display='none';
+  document.getElementById('page-form').style.display='block';
+  let html='',total=0;
+  Object.keys(selections).forEach(id=>{
+    const c=campsiteData.find(c=>c.id===id);
+    if(c&&selections[id]>0){const s=c.price*selections[id];total+=s;html+='<div class="summary-row"><span style="color:var(--text-mid);">'+c.name+' × '+selections[id]+'</span><span style="font-weight:700;">NT$'+s.toLocaleString()+'</span></div>';}
+  });
+  html+='<div class="summary-row total"><span>總金額</span><span>NT$'+total.toLocaleString()+'</span></div>';
+  document.getElementById('form-summary').innerHTML=html;
+}
+
+async function submitBooking(){
+  const name=document.getElementById('form-name').value.trim();
+  const phone=document.getElementById('form-phone').value.trim();
+  const notes=document.getElementById('form-notes').value.trim();
+  if(!name){alert('請輸入姓名');return;}
+  if(!phone){alert('請輸入聯絡電話');return;}
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true;btn.textContent='訂位中...';
+  const items=Object.keys(selections).map(id=>({id,qty:selections[id]}));
+  try{
+    const r=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'createBooking',lineUid:lineProfile?lineProfile.userId:'',displayName:lineProfile?lineProfile.displayName:name,name,phone,notes,date:selectedDate,items})});
+    const d=await r.json();
+    if(!d.success)throw new Error(d.message);
+    document.getElementById('page-form').style.display='none';
+    document.getElementById('page-success').style.display='block';
+    document.getElementById('main-app').style.display='none';
+    document.getElementById('success-booking-id').textContent=d.bookingId;
+    let dhtml='',total=0;
+    items.forEach(item=>{const c=campsiteData.find(c=>c.id===item.id);if(c){const s=c.price*item.qty;total+=s;dhtml+='<div class="summary-row"><span style="color:var(--text-mid);">'+c.name+' × '+item.qty+'</span><span style="font-weight:700;">NT$'+s.toLocaleString()+'</span></div>';}});
+    dhtml+='<div class="summary-row total"><span>總金額</span><span>NT$'+total.toLocaleString()+'</span></div>';
+    document.getElementById('success-detail').innerHTML=dhtml;
+    document.getElementById('transfer-info').innerHTML=
+      '<div class="transfer-row"><span style="color:var(--text-mid);">銀行</span><span style="font-weight:700;">'+(settings['銀行代碼與名稱']||'008 華南銀行')+'</span></div>'+
+      '<div class="transfer-row"><span style="color:var(--text-mid);">戶名</span><span style="font-weight:700;">'+(settings['戶名']||'胡小姐')+'</span></div>'+
+      '<div class="transfer-row"><span style="color:var(--text-mid);">帳號</span><span style="font-weight:700;font-size:15px;letter-spacing:1px;">'+(settings['帳號']||'請洽官方LINE')+'</span></div>';
+  }catch(e){alert('訂位失敗：'+e.message);}
+  finally{btn.disabled=false;btn.textContent='送出訂位';}
+}
+
+async function loadMyBookings(){
+  const container=document.getElementById('mybookings-content');
+  if(lineProfile){
+    container.innerHTML='<div class="loading"><div class="spinner"></div>載入中...</div>';
+    try{const r=await fetch(API_URL+'?action=getMyBookings&lineUid='+lineProfile.userId);const d=await r.json();renderBookings(d.bookings,container);}
+    catch(e){container.innerHTML='<div class="empty">載入失敗，請重試</div>';}
+  }else{renderSearchForm(container);}
+}
+
+function renderSearchForm(c){
+  c.innerHTML=`<div class="card"><div class="card-title">方式一：訂單編號</div><div class="form-row"><input type="text" class="form-input" id="search-id" placeholder="例如：HSJ-20260801-0001"></div><button class="btn-primary" style="font-size:13px;padding:11px;" onclick="searchById()">查詢</button></div><div class="search-divider"><div class="search-divider-line"></div><div style="font-size:12px;color:var(--gray-mid);">或</div><div class="search-divider-line"></div></div><div class="card"><div class="card-title">方式二：姓名 ＋ 電話</div><div class="form-row"><input type="text" class="form-input" id="search-name" placeholder="訂位時填寫的姓名"></div><div class="form-row"><input type="tel" class="form-input" id="search-phone" placeholder="訂位時填寫的電話"></div><button class="btn-primary" style="font-size:13px;padding:11px;" onclick="searchByNamePhone()">查詢</button></div><div id="search-results"></div>`;
+}
+
+async function searchById(){
+  const id=document.getElementById('search-id').value.trim();
+  if(!id){alert('請輸入訂單編號');return;}
+  try{const r=await fetch(API_URL+'?action=getMyBookings&bookingId='+encodeURIComponent(id));const d=await r.json();renderBookings(d.bookings||[],document.getElementById('search-results'));}
+  catch(e){document.getElementById('search-results').innerHTML='<div class="empty">查詢失敗</div>';}
+}
+
+async function searchByNamePhone(){
+  const name=document.getElementById('search-name').value.trim();
+  const phone=document.getElementById('search-phone').value.trim();
+  if(!name||!phone){alert('請輸入姓名和電話');return;}
+  try{const r=await fetch(API_URL+'?action=getMyBookings&name='+encodeURIComponent(name)+'&phone='+encodeURIComponent(phone));const d=await r.json();renderBookings(d.bookings||[],document.getElementById('search-results'));}
+  catch(e){document.getElementById('search-results').innerHTML='<div class="empty">查詢失敗</div>';}
+}
+
+function renderBookings(bookings,container){
+  if(!bookings||!bookings.length){container.innerHTML='<div class="empty">找不到訂單記錄</div>';return;}
+  const today=new Date();today.setHours(0,0,0,0);
+  let html='<div style="font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:1px;margin-bottom:10px;">共 '+bookings.length+' 筆訂單</div>';
+  bookings.forEach(b=>{
+    const p=b.date.toString().split('/');
+    const bd=new Date(p[0],p[1]-1,p[2]);
+    const isCancelled=b.status==='已取消';
+    const isPast=bd<today&&!isCancelled;
+    const tc=isCancelled?'tag-cancelled':(isPast?'tag-ended':'tag-upcoming');
+    const tt=isCancelled?'已取消':(isPast?'已結束':'即將入場');
+    html+='<div class="booking-card'+(isCancelled||isPast?' past':'')+'">';
+    html+='<div class="booking-header"><div><div class="booking-date">'+b.date+'</div><div class="booking-id-text">'+b.bookingId+'</div></div><span class="tag '+tc+'">'+tt+'</span></div>';
+    html+='<div style="border-top:0.5px solid #F0F0F0;padding-top:10px;">';
+    b.details.split(',').forEach(item=>{html+='<div class="booking-detail-row"><span>'+item.trim()+'</span></div>';});
+    html+='<div class="booking-detail-row total"><span>總金額</span><span>NT$'+Number(b.totalPrice).toLocaleString()+'</span></div></div>';
+    if(!isCancelled&&!isPast)html+='<button class="btn-danger" onclick="cancelBooking(\''+b.bookingId+'\')">取消訂單</button>';
+    html+='</div>';
+  });
+  container.innerHTML=html;
+}
+
+async function cancelBooking(bookingId){
+  if(!confirm('確定要取消這筆訂位嗎？\n取消後無法復原。'))return;
+  try{
+    const lineUid=lineProfile?lineProfile.userId:'';
+    const r=await fetch(API_URL+'?action=cancelBooking&bookingId='+bookingId+'&lineUid='+lineUid);
+    const d=await r.json();
+    if(!d.success)throw new Error(d.message);
+    alert('訂位已成功取消');
+    loadMyBookings();
+  }catch(e){alert('取消失敗：'+e.message);}
+}
+
+function goToMyBookings(){
+  document.getElementById('page-success').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  switchTab('mybookings');
+}
+
+init();
+</script><script src="./index_files/non-ios-extensions_2_22_0.js.下載" type="text/javascript"></script>
+
+
+</body></html>
