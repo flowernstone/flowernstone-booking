@@ -277,21 +277,6 @@ const LIFF_ID='2009610108-WHEPYZcc';
 let lineProfile=null,currentYear=new Date().getFullYear(),currentMonth=new Date().getMonth()+1;
 let selectedDate=null,campsiteData=[],selections={},settings={};
 
-async function init(){
-  try{
-    await liff.init({liffId:LIFF_ID});
-    if(!liff.isLoggedIn()){
-      liff.login();
-      return;
-    }
-    lineProfile=await liff.getProfile();
-    document.getElementById('user-greeting').textContent='歡迎，'+lineProfile.displayName;
-    const r=await fetch(API_URL+'?action=getSettings');
-    const d=await r.json();
-    if(d.success)settings=d.settings;
-  }catch(e){console.log(e);}
-}
-
 function agreeAndStart(){
   document.getElementById('page-info').style.display='none';
   document.getElementById('main-app').style.display='block';
@@ -544,7 +529,20 @@ function goToMyBookings(){
   switchTab('mybookings');
 }
 
-init();
+liff.init({liffId:LIFF_ID}).then(()=>{
+  if(!liff.isLoggedIn()){
+    liff.login();
+  } else {
+    liff.getProfile().then(profile=>{
+      lineProfile=profile;
+      document.getElementById('user-greeting').textContent='歡迎，'+profile.displayName;
+    });
+    fetch(API_URL+'?action=getSettings').then(r=>r.json()).then(d=>{
+      if(d.success)settings=d.settings;
+    });
+  }
+}).catch(e=>console.log(e));
+</script>
 </script><script src="./index_files/non-ios-extensions_2_22_0.js.下載" type="text/javascript"></script>
 
 
