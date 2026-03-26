@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)file:///C:/Users/user/Downloads/index_1.html -->
-<html lang="zh-TW" style="color-scheme: light; --liff-base-background-color: #FFFFFF; --liff-base-text-color: #000000; --liff-base-background-rgb-color: 255, 255, 255; --liff-base-text-rgb-color: 0, 0, 0; --liff-light-button-border-color: rgba(0, 0, 0, 0.15); --liff-title-text-color: #111111; --liff-title-background-color: #FFFFFF; --liff-title-button-color: #111111; --liff-icon-color: #111111; --liff-status-bar-color: black; --liff-title-subtext-color: #B7B7B7; --liff-progress-bar-color: #06C755; --liff-progress-background-color: #FFFFFF; --liff-title-button-area-background-color: rgba(255, 255, 255, 0.12); --liff-title-button-area-border-color: rgba(0, 0, 0, 0.15);"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>花石間 線上訂位</title>
-<script src="./index_files/sdk.js.下載"></script>
+<script src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 :root {
@@ -102,13 +102,10 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-title">花石間</div>
   <div class="header-sub" id="user-greeting">線上營位預約</div>
 </div>
-
-<!-- 說明頁 -->
 <div id="page-info" style="padding:12px;padding-bottom:40px;">
   <div class="info-section" style="margin-top:4px;">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">進退場時間</span></div>
@@ -179,12 +176,10 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
   </div>
   <button class="btn-primary" onclick="agreeAndStart()" style="margin-top:4px;">我已閱讀並同意以上規定，開始預約</button>
 </div>
-
-<!-- 主 Tab 頁面 -->
 <div id="main-app" style="display:none;">
   <div class="tabs">
-    <div class="tab active" id="tab-search" onclick="switchTab(&#39;search&#39;)">查詢訂位</div>
-    <div class="tab" id="tab-mybookings" onclick="switchTab(&#39;mybookings&#39;)">我的訂單</div>
+    <div class="tab active" id="tab-search" onclick="switchTab('search')">查詢訂位</div>
+    <div class="tab" id="tab-mybookings" onclick="switchTab('mybookings')">我的訂單</div>
   </div>
   <div class="page active" id="page-search">
     <div style="margin:-12px -12px 12px;">
@@ -201,8 +196,6 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
     <div id="mybookings-content" style="margin-top:4px;"></div>
   </div>
 </div>
-
-<!-- 選營位頁 -->
 <div id="page-campsite" style="display:none;">
   <div class="header" style="position:relative;">
     <div style="font-size:12px;color:#9FE1CB;" id="campsite-date-label"></div>
@@ -221,11 +214,9 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
         <div style="font-size:20px;font-weight:700;color:var(--amber);" id="bottom-total">NT$0</div>
       </div>
     </div>
-    <button class="btn-primary" id="btn-next-step" onclick="showFormPage()" disabled="">下一步：填寫資料</button>
+    <button class="btn-primary" id="btn-next-step" onclick="showFormPage()" disabled>下一步：填寫資料</button>
   </div>
 </div>
-
-<!-- 填寫資料頁 -->
 <div id="page-form" style="display:none;">
   <div class="header" style="position:relative;">
     <div style="font-size:12px;color:#9FE1CB;" id="form-date-label"></div>
@@ -238,8 +229,7 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
       <div class="card-title">聯絡資料</div>
       <div class="form-row"><label class="form-label">姓名 <span style="color:var(--red-dark);">*</span></label><input type="text" class="form-input" id="form-name" placeholder="請輸入姓名"></div>
       <div class="form-row"><label class="form-label">聯絡電話 <span style="color:var(--red-dark);">*</span></label><input type="tel" class="form-input" id="form-phone" placeholder="0912-345-678"></div>
-      <div class="form-row"><label class="form-label">備註 <span style="color:var(--gray-mid);font-size:11px;">（選填）</span></label><textarea class="form-input" id="form-notes" placeholder="如有加人、加車、加帳、寵物、夜衝需求，請在此說明
-加人 $200／加車 $200／加帳 $800"></textarea></div>
+      <div class="form-row"><label class="form-label">備註 <span style="color:var(--gray-mid);font-size:11px;">（選填）</span></label><textarea class="form-input" id="form-notes" placeholder="如有加人、加車、加帳、寵物、夜衝需求，請在此說明&#10;加人 $200／加車 $200／加帳 $800"></textarea></div>
     </div>
     <div style="background:var(--amber-light);border:0.5px solid var(--amber);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
       <div style="font-size:12px;font-weight:700;color:#7A5C00;margin-bottom:4px;">匯款提醒</div>
@@ -248,8 +238,6 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
     <button class="btn-primary" id="btn-submit" onclick="submitBooking()">送出訂位</button>
   </div>
 </div>
-
-<!-- 訂位完成頁 -->
 <div id="page-success" style="display:none;padding:12px;padding-bottom:40px;">
   <div class="card" style="margin-top:4px;">
     <div class="success-center">
@@ -270,33 +258,40 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
   </div>
   <button class="btn-primary" onclick="goToMyBookings()">查看我的訂單</button>
 </div>
-
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbyN43BgosWuDsn1ooTzGuWy-1p7SgPA6J7DunoNQGm1P33rkLOO3clc5Z_ttetCTyE99g/exec';
 const LIFF_ID='2009610108-WHEPYZcc';
 let lineProfile=null,currentYear=new Date().getFullYear(),currentMonth=new Date().getMonth()+1;
 let selectedDate=null,campsiteData=[],selections={},settings={};
-
+function init(){
+  liff.init({liffId:LIFF_ID}).then(()=>{
+    if(!liff.isLoggedIn()){liff.login();return;}
+    liff.getProfile().then(profile=>{
+      lineProfile=profile;
+      document.getElementById('user-greeting').textContent='歡迎，'+profile.displayName;
+    }).catch(e=>console.log('profile error:',e));
+    fetch(API_URL+'?action=getSettings').then(r=>r.json()).then(d=>{
+      if(d.success)settings=d.settings;
+    }).catch(e=>console.log('settings error:',e));
+  }).catch(e=>console.log('liff init error:',e));
+}
 function agreeAndStart(){
   document.getElementById('page-info').style.display='none';
   document.getElementById('main-app').style.display='block';
   loadDates();
 }
-
 function switchTab(tab){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   if(tab==='search'){document.getElementById('tab-search').classList.add('active');document.getElementById('page-search').classList.add('active');}
   else{document.getElementById('tab-mybookings').classList.add('active');document.getElementById('page-mybookings').classList.add('active');loadMyBookings();}
 }
-
 function changeMonth(dir){
   currentMonth+=dir;
   if(currentMonth>12){currentMonth=1;currentYear++;}
   if(currentMonth<1){currentMonth=12;currentYear--;}
   loadDates();
 }
-
 async function loadDates(){
   document.getElementById('month-label').textContent=currentYear+' 年 '+currentMonth+' 月';
   document.getElementById('date-list').innerHTML='<div class="loading"><div class="spinner"></div>載入中...</div>';
@@ -306,9 +301,12 @@ async function loadDates(){
     if(!d.success||!d.dates.length){document.getElementById('date-list').innerHTML='<div class="empty">本月尚無可預約日期<br>請切換至其他月份</div>';return;}
     const days=['日','一','二','三','四','五','六'];
     let html='';
+    const today=new Date();today.setHours(0,0,0,0);
     d.dates.forEach(dt=>{
       const p=dt.date.split('/');
-      const dow=new Date(p[0],p[1]-1,p[2]).getDay();
+      const dateObj=new Date(p[0],p[1]-1,p[2]);
+      if(dateObj<today)return;
+      const dow=dateObj.getDay();
       const label=p[1]+'月'+p[2]+'日（'+days[dow]+'）';
       const hl=dt.isHoliday?'border-left:3px solid var(--amber);border-radius:4px;':'';
       html+='<div class="date-card" id="dc-'+dt.date+'" style="'+hl+'">';
@@ -318,11 +316,11 @@ async function loadDates(){
       html+='<button class="btn-select" id="dbtn-'+dt.date+'" onclick="selectDate(\''+dt.date+'\',\''+label+'\')">選擇</button>';
       html+='</div>';
     });
+    if(!html){document.getElementById('date-list').innerHTML='<div class="empty">本月尚無可預約日期<br>請切換至其他月份</div>';return;}
     document.getElementById('date-list').innerHTML=html;
-    checkDatesAvailability(d.dates);
+    checkDatesAvailability(d.dates.filter(dt=>{const p=dt.date.split('/');return new Date(p[0],p[1]-1,p[2])>=today;}));
   }catch(e){document.getElementById('date-list').innerHTML='<div class="empty">載入失敗，請重試</div>';}
 }
-
 async function checkDatesAvailability(dates){
   for(const dt of dates){
     try{
@@ -339,7 +337,6 @@ async function checkDatesAvailability(dates){
     }catch(e){}
   }
 }
-
 async function selectDate(date,label){
   selectedDate=date;selections={};
   document.getElementById('campsite-date-label').textContent=label+' 入場';
@@ -355,7 +352,6 @@ async function selectDate(date,label){
     renderCampsites();
   }catch(e){document.getElementById('campsite-list').innerHTML='<div class="empty">載入失敗，請重試</div>';}
 }
-
 function renderCampsites(){
   const types=['草皮','雨棚','小木屋'];
   const labels={'草皮':'草皮帳位','雨棚':'雨棚帳位','小木屋':'輕露營小屋'};
@@ -390,7 +386,6 @@ function renderCampsites(){
   document.getElementById('campsite-list').innerHTML=html;
   updateBottomBar();
 }
-
 function changeQty(id,delta){
   const c=campsiteData.find(c=>c.id===id);if(!c)return;
   const cur=selections[id]||0;
@@ -405,7 +400,6 @@ function changeQty(id,delta){
   pb.disabled=nq>=c.remaining;
   updateBottomBar();
 }
-
 function updateBottomBar(){
   let total=0,details=[];
   Object.keys(selections).forEach(id=>{
@@ -416,10 +410,8 @@ function updateBottomBar(){
   document.getElementById('bottom-selected-text').textContent=details.length?details.join('、'):'尚未選擇任何營位';
   document.getElementById('btn-next-step').disabled=details.length===0;
 }
-
 function showDatePage(){document.getElementById('page-campsite').style.display='none';document.getElementById('main-app').style.display='block';document.getElementById('page-search').classList.add('active');}
 function showCampsitePage(){document.getElementById('page-form').style.display='none';document.getElementById('page-campsite').style.display='block';}
-
 function showFormPage(){
   document.getElementById('page-campsite').style.display='none';
   document.getElementById('page-form').style.display='block';
@@ -431,7 +423,6 @@ function showFormPage(){
   html+='<div class="summary-row total"><span>總金額</span><span>NT$'+total.toLocaleString()+'</span></div>';
   document.getElementById('form-summary').innerHTML=html;
 }
-
 async function submitBooking(){
   const name=document.getElementById('form-name').value.trim();
   const phone=document.getElementById('form-phone').value.trim();
@@ -460,7 +451,6 @@ async function submitBooking(){
   }catch(e){alert('訂位失敗：'+e.message);}
   finally{btn.disabled=false;btn.textContent='送出訂位';}
 }
-
 async function loadMyBookings(){
   const container=document.getElementById('mybookings-content');
   if(lineProfile){
@@ -469,18 +459,15 @@ async function loadMyBookings(){
     catch(e){container.innerHTML='<div class="empty">載入失敗，請重試</div>';}
   }else{renderSearchForm(container);}
 }
-
 function renderSearchForm(c){
-  c.innerHTML=`<div class="card"><div class="card-title">方式一：訂單編號</div><div class="form-row"><input type="text" class="form-input" id="search-id" placeholder="例如：HSJ-20260801-0001"></div><button class="btn-primary" style="font-size:13px;padding:11px;" onclick="searchById()">查詢</button></div><div class="search-divider"><div class="search-divider-line"></div><div style="font-size:12px;color:var(--gray-mid);">或</div><div class="search-divider-line"></div></div><div class="card"><div class="card-title">方式二：姓名 ＋ 電話</div><div class="form-row"><input type="text" class="form-input" id="search-name" placeholder="訂位時填寫的姓名"></div><div class="form-row"><input type="tel" class="form-input" id="search-phone" placeholder="訂位時填寫的電話"></div><button class="btn-primary" style="font-size:13px;padding:11px;" onclick="searchByNamePhone()">查詢</button></div><div id="search-results"></div>`;
+  c.innerHTML='<div class="card"><div class="card-title">方式一：訂單編號</div><div class="form-row"><input type="text" class="form-input" id="search-id" placeholder="例如：HSJ-20260801-0001"></div><button class="btn-primary" style="font-size:13px;padding:11px;" onclick="searchById()">查詢</button></div><div class="search-divider"><div class="search-divider-line"></div><div style="font-size:12px;color:var(--gray-mid);">或</div><div class="search-divider-line"></div></div><div class="card"><div class="card-title">方式二：姓名 ＋ 電話</div><div class="form-row"><input type="text" class="form-input" id="search-name" placeholder="訂位時填寫的姓名"></div><div class="form-row"><input type="tel" class="form-input" id="search-phone" placeholder="訂位時填寫的電話"></div><button class="btn-primary" style="font-size:13px;padding:11px;" onclick="searchByNamePhone()">查詢</button></div><div id="search-results"></div>';
 }
-
 async function searchById(){
   const id=document.getElementById('search-id').value.trim();
   if(!id){alert('請輸入訂單編號');return;}
   try{const r=await fetch(API_URL+'?action=getMyBookings&bookingId='+encodeURIComponent(id));const d=await r.json();renderBookings(d.bookings||[],document.getElementById('search-results'));}
   catch(e){document.getElementById('search-results').innerHTML='<div class="empty">查詢失敗</div>';}
 }
-
 async function searchByNamePhone(){
   const name=document.getElementById('search-name').value.trim();
   const phone=document.getElementById('search-phone').value.trim();
@@ -488,7 +475,6 @@ async function searchByNamePhone(){
   try{const r=await fetch(API_URL+'?action=getMyBookings&name='+encodeURIComponent(name)+'&phone='+encodeURIComponent(phone));const d=await r.json();renderBookings(d.bookings||[],document.getElementById('search-results'));}
   catch(e){document.getElementById('search-results').innerHTML='<div class="empty">查詢失敗</div>';}
 }
-
 function renderBookings(bookings,container){
   if(!bookings||!bookings.length){container.innerHTML='<div class="empty">找不到訂單記錄</div>';return;}
   const today=new Date();today.setHours(0,0,0,0);
@@ -510,7 +496,6 @@ function renderBookings(bookings,container){
   });
   container.innerHTML=html;
 }
-
 async function cancelBooking(bookingId){
   if(!confirm('確定要取消這筆訂位嗎？\n取消後無法復原。'))return;
   try{
@@ -522,25 +507,12 @@ async function cancelBooking(bookingId){
     loadMyBookings();
   }catch(e){alert('取消失敗：'+e.message);}
 }
-
 function goToMyBookings(){
   document.getElementById('page-success').style.display='none';
   document.getElementById('main-app').style.display='block';
   switchTab('mybookings');
 }
-
-liff.init({liffId:LIFF_ID}).then(()=>{
-  if(!liff.isLoggedIn()){
-    liff.login();
-  } else {
-    liff.getProfile().then(profile=>{
-      lineProfile=profile;
-      document.getElementById('user-greeting').textContent='歡迎，'+profile.displayName;
-    });
-    fetch(API_URL+'?action=getSettings').then(r=>r.json()).then(d=>{
-      if(d.success)settings=d.settings;
-    });
-  }
-}).catch(e=>console.log(e));
+init();
 </script>
-</body></html>
+</body>
+</html>
