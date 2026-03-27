@@ -625,7 +625,7 @@ function renderBookings(bookings,container){
     b.details.split(',').forEach(item=>{html+='<div class="booking-detail-row"><span>'+item.trim()+'</span></div>';});
     html+='<div class="booking-detail-row total"><span>總金額</span><span>NT$'+Number(b.totalPrice).toLocaleString()+'</span></div></div>';
     if(!isCancelled&&!isPast){html+='<div style="display:flex;gap:8px;margin-top:10px;"><button style="flex:1;padding:10px;background:var(--green-mid);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;" onclick="showModifyPage('+encodeBooking(b)+')">✏️ 修改</button><button class="btn-danger" style="flex:1;margin:0;" onclick="cancelBooking(\''+b.bookingId+'\')">取消訂單</button>';
-    html+='</div>';
+    html+='</div>';}
   });
   container.innerHTML=html;
 }
@@ -718,7 +718,7 @@ async function loadModifyDates() {
       const dow = dateObj.getDay();
       const label = p[1] + '月' + p[2] + '日（' + days[dow] + '）';
       const isSelected = dt.date === modifyCurrentDate;
-      html += '<div style="padding:12px 14px;border-bottom:0.5px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:'+(isSelected?'var(--green-pale)':'#fff')+'" onclick="selectModifyDate(''+dt.date+'',''+label+'')">';
+      html += '<div style="padding:12px 14px;border-bottom:0.5px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:'+(isSelected?'var(--green-pale)':'#fff')+'" onclick="selectModifyDate(\''+dt.date+'\',\''+label+'\')">';
       html += '<span style="font-size:14px;font-weight:'+(isSelected?'700':'400')+';">'+label+'</span>';
       if (isSelected) html += '<span style="color:var(--green-mid);font-weight:700;font-size:12px;">✓ 目前</span>';
       html += '</div>';
@@ -779,10 +779,10 @@ function renderModifyCampsites() {
     html += '<div class="campsite-price">NT$'+c.price.toLocaleString()+' <span style="font-size:11px;font-weight:400;color:var(--gray-mid);">/ 晚</span></div></div>';
     if (!full || qty > 0) {
       html += '<div class="qty-control">';
-      html += '<button class="qty-btn minus'+(qty>0?' active':'')+'" onclick="changeModifyQty(''+c.id+'',-1)"'+(qty===0?' disabled':'')+'>−</button>';
+      html += '<button class="qty-btn minus'+(qty>0?' active':'')+'" onclick="changeModifyQty(\''+c.id+'\',-1)"'+(qty===0?' disabled':'')+'>−</button>';
       html += '<span class="qty-num" id="mqty-'+c.id+'">'+qty+'</span>';
       const maxQty = c.remaining + qty;
-      html += '<button class="qty-btn plus" onclick="changeModifyQty(''+c.id+'',1)"'+(qty>=maxQty?' disabled':'')+'>+</button>';
+      html += '<button class="qty-btn plus" onclick="changeModifyQty(\''+c.id+'\',1)"'+(qty>=maxQty?' disabled':'')+'>+</button>';
       html += '</div>';
     }
     html += '</div>';
