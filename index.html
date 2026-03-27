@@ -187,6 +187,7 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
       <div class="info-item"><span class="info-item-dot">20.</span><span>營區土地有限，停車不易，請遵守一車一帳之規定；來訪之遊客每車、每人收兩百。</span></div>
     </div>
   </div>
+  </div><!-- end info-dynamic-content -->
   <div class="info-section">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">人為因素退訂須知</span></div>
     <div class="refund-row" style="background:var(--green-pale);"><span style="font-size:12px;font-weight:500;color:var(--green-dark);">14 天前取消</span><span style="font-size:12px;font-weight:700;color:var(--green-dark);">退 100%，或保留權益 3 個月</span></div>
@@ -201,7 +202,6 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
       <div style="font-size:13px;font-weight:700;">電話：0933-152-018 余小姐</div>
     </div>
   </div>
-  </div><!-- end info-dynamic-content -->
   <button class="btn-primary" onclick="agreeAndStart()" style="margin-top:4px;">我已閱讀並同意以上規定，開始預約</button>
 </div>
 <div id="main-app" style="display:none;">
@@ -943,7 +943,7 @@ async function loadPageContent(){
       }).join('');
       return'<div class="info-section"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">'+title+'</span></div><div class="info-text">'+items+'</div></div>';
     };
-    ['進退場時間','草皮說明','小屋說明','營區規定','退訂政策'].forEach(key=>{
+    ['進退場時間','草皮營區','輕露營小屋區','營區規定'].forEach(key=>{
       if(c[key])html+=renderSection(key,c[key]);
     });
     if(html)el.innerHTML=html;
