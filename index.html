@@ -133,6 +133,7 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
   </div>
 
   <!-- ===== 規則說明區塊 ===== -->
+  <div id="info-dynamic-content">
   <div class="info-section" style="margin-top:4px;">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">進退場時間</span></div>
     <div class="info-text">
@@ -200,12 +201,14 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
       <div style="font-size:13px;font-weight:700;">電話：0933-152-018 余小姐</div>
     </div>
   </div>
+  </div><!-- end info-dynamic-content -->
   <button class="btn-primary" onclick="agreeAndStart()" style="margin-top:4px;">我已閱讀並同意以上規定，開始預約</button>
 </div>
 <div id="main-app" style="display:none;">
   <div class="tabs">
     <div class="tab active" id="tab-search" onclick="switchTab('search')">查詢訂位</div>
     <div class="tab" id="tab-mybookings" onclick="switchTab('mybookings')">我的訂單</div>
+    <div class="tab" id="tab-admin" onclick="switchTab('admin')" style="display:none;">🔧 管理</div>
   </div>
   <div class="page active" id="page-search">
     <div style="margin:-12px -12px 12px;">
@@ -220,6 +223,9 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
   </div>
   <div class="page" id="page-mybookings">
     <div id="mybookings-content" style="margin-top:4px;"></div>
+  </div>
+  <div class="page" id="page-admin">
+    <div id="admin-content" style="margin-top:4px;"></div>
   </div>
 </div>
 
@@ -270,6 +276,58 @@ textarea.form-input{min-height:80px;resize:none;line-height:1.6;}
   </div>
 </div>
 
+
+<!-- ===== 修改訂單頁 ===== -->
+<div id="page-modify" style="display:none;">
+  <div class="header" style="position:relative;">
+    <div style="font-size:12px;color:#9FE1CB;" id="modify-booking-id-label"></div>
+    <div style="font-size:17px;font-weight:700;color:#fff;margin-top:2px;">修改訂單</div>
+    <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;" onclick="closeModifyPage()">← 返回</div>
+  </div>
+  <div style="padding:12px;padding-bottom:40px;">
+
+    <!-- 入場日期 -->
+    <div class="card">
+      <div class="card-title">入場日期</div>
+      <div id="modify-date-display" style="font-size:15px;font-weight:700;margin-bottom:10px;"></div>
+      <button class="btn-primary" style="background:var(--green-pale);color:var(--green-dark);font-size:13px;padding:10px;" onclick="toggleModifyDatePicker()">選擇其他日期 ▾</button>
+      <div id="modify-date-picker" style="display:none;margin-top:10px;">
+        <div class="month-nav" style="border-radius:8px 8px 0 0;">
+          <button class="month-nav-btn" onclick="changeModifyMonth(-1)">‹</button>
+          <div class="month-label" id="modify-month-label"></div>
+          <button class="month-nav-btn" onclick="changeModifyMonth(1)">›</button>
+        </div>
+        <div id="modify-date-list" style="max-height:240px;overflow-y:auto;border:0.5px solid #e0e0e0;border-top:none;border-radius:0 0 8px 8px;background:#fff;"></div>
+      </div>
+    </div>
+
+    <!-- 帳位選擇 -->
+    <div class="card">
+      <div class="card-title">帳位選擇</div>
+      <div id="modify-campsite-list"><div style="color:var(--gray-mid);font-size:13px;">載入中...</div></div>
+    </div>
+
+    <!-- 個人資料 -->
+    <div class="card">
+      <div class="card-title">個人資料</div>
+      <div class="form-row"><label class="form-label">姓名 <span style="color:var(--red-dark);">*</span></label><input type="text" class="form-input" id="modify-name" placeholder="請輸入姓名"></div>
+      <div class="form-row"><label class="form-label">聯絡電話 <span style="color:var(--red-dark);">*</span></label><input type="tel" class="form-input" id="modify-phone" placeholder="0912-345-678"></div>
+      <div class="form-row"><label class="form-label">Email <span style="color:var(--gray-mid);font-size:11px;">（選填）</span></label><input type="email" class="form-input" id="modify-email" placeholder="example@email.com"></div>
+      <div class="form-row"><label class="form-label">備註 <span style="color:var(--gray-mid);font-size:11px;">（選填）</span></label><textarea class="form-input" id="modify-notes" placeholder="加人、加車、加帳、寵物、夜衝等需求"></textarea></div>
+    </div>
+
+    <!-- 金額預覽 -->
+    <div id="modify-total-box" style="background:var(--amber-light);border:0.5px solid var(--amber);border-radius:10px;padding:12px 16px;margin-bottom:12px;display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:13px;color:#7A5C00;font-weight:700;">修改後總金額</span>
+        <span id="modify-total-amount" style="font-size:20px;font-weight:700;color:var(--amber);">NT$0</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="btn-modify-submit" onclick="submitModify()">確認修改</button>
+  </div>
+</div>
+
 <!-- ===== 訂位成功頁 ===== -->
 <div id="page-success" style="display:none;padding:12px;padding-bottom:40px;">
   <div class="card" style="margin-top:4px;">
@@ -297,6 +355,20 @@ const API_URL='https://script.google.com/macros/s/AKfycbyN43BgosWuDsn1ooTzGuWy-1
 const LIFF_ID='2009610108-WHEPYZcc';
 let lineProfile=null,currentYear=new Date().getFullYear(),currentMonth=new Date().getMonth()+1;
 let selectedDate=null,campsiteData=[],selections={},settings={};
+let isAdmin=false,isAdminMode=false,adminBookings=[];
+
+// 統一日期格式化：支援 yyyy/MM/dd、ISO、Date.toString() 等各種格式 → 輸出 yyyy/MM/dd
+function formatDateStr(d){
+  if(!d)return'';
+  const s=String(d).trim();
+  const m1=s.match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+  if(m1)return m1[1]+'/'+m1[2].padStart(2,'0')+'/'+m1[3].padStart(2,'0');
+  const months={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+  const m2=s.toLowerCase().match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\.?\s+(\d{1,2})\s+(\d{4})\b/);
+  if(m2){const mo=months[m2[1]];if(mo)return m2[3]+'/'+String(mo).padStart(2,'0')+'/'+m2[2].padStart(2,'0');}
+  try{const dt=new Date(s);if(!isNaN(dt)){const y=dt.getFullYear(),mo=dt.getMonth()+1,da=dt.getDate();return y+'/'+String(mo).padStart(2,'0')+'/'+String(da).padStart(2,'0');}}catch(e){}
+  return s;
+}
 
 function init(){
   liff.init({liffId:LIFF_ID}).then(()=>{
@@ -304,10 +376,15 @@ function init(){
     liff.getProfile().then(profile=>{
       lineProfile=profile;
       document.getElementById('user-greeting').textContent='歡迎，'+profile.displayName;
+      fetch(API_URL+'?action=checkAdmin&lineUid='+profile.userId)
+        .then(r=>r.json()).then(d=>{
+          if(d.success&&d.isAdmin){isAdmin=true;document.getElementById('tab-admin').style.display='';}
+        }).catch(()=>{});
     }).catch(e=>console.log('profile error:',e));
     fetch(API_URL+'?action=getSettings').then(r=>r.json()).then(d=>{
       if(d.success)settings=d.settings;
     }).catch(e=>console.log('settings error:',e));
+    loadPageContent();
   }).catch(e=>console.log('liff init error:',e));
 }
 
@@ -321,6 +398,7 @@ function switchTab(tab){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   if(tab==='search'){document.getElementById('tab-search').classList.add('active');document.getElementById('page-search').classList.add('active');}
+  else if(tab==='admin'){document.getElementById('tab-admin').classList.add('active');document.getElementById('page-admin').classList.add('active');loadAdminBookings();}
   else{document.getElementById('tab-mybookings').classList.add('active');document.getElementById('page-mybookings').classList.add('active');loadMyBookings();}
 }
 
@@ -534,18 +612,19 @@ function renderBookings(bookings,container){
   const today=new Date();today.setHours(0,0,0,0);
   let html='<div style="font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:1px;margin-bottom:10px;">共 '+bookings.length+' 筆訂單</div>';
   bookings.forEach(b=>{
-    const p=b.date.toString().split('/');
+    const dateStr=formatDateStr(b.date);
+    const p=dateStr.split('/');
     const bd=new Date(p[0],p[1]-1,p[2]);
     const isCancelled=b.status==='已取消';
     const isPast=bd<today&&!isCancelled;
     const tc=isCancelled?'tag-cancelled':(isPast?'tag-ended':'tag-upcoming');
     const tt=isCancelled?'已取消':(isPast?'已結束':'即將入場');
     html+='<div class="booking-card'+(isCancelled||isPast?' past':'')+'">';
-    html+='<div class="booking-header"><div><div class="booking-date">'+b.date+'</div><div class="booking-id-text">'+b.bookingId+'</div></div><span class="tag '+tc+'">'+tt+'</span></div>';
+    html+='<div class="booking-header"><div><div class="booking-date">'+dateStr+'</div><div class="booking-id-text">'+b.bookingId+'</div></div><span class="tag '+tc+'">'+tt+'</span></div>';
     html+='<div style="border-top:0.5px solid #F0F0F0;padding-top:10px;">';
     b.details.split(',').forEach(item=>{html+='<div class="booking-detail-row"><span>'+item.trim()+'</span></div>';});
     html+='<div class="booking-detail-row total"><span>總金額</span><span>NT$'+Number(b.totalPrice).toLocaleString()+'</span></div></div>';
-    if(!isCancelled&&!isPast)html+='<button class="btn-danger" onclick="cancelBooking(\''+b.bookingId+'\')">取消訂單</button>';
+    if(!isCancelled&&!isPast){html+='<div style="display:flex;gap:8px;margin-top:10px;"><button style="flex:1;padding:10px;background:var(--green-mid);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;" onclick="showModifyPage('+encodeBooking(b)+')">✏️ 修改</button><button class="btn-danger" style="flex:1;margin:0;" onclick="cancelBooking(\''+b.bookingId+'\')">取消訂單</button>';
     html+='</div>';
   });
   container.innerHTML=html;
@@ -567,6 +646,308 @@ function goToMyBookings(){
   document.getElementById('page-success').style.display='none';
   document.getElementById('main-app').style.display='block';
   switchTab('mybookings');
+}
+
+
+function encodeBooking(b) {
+  return JSON.stringify(b).replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+// showModifyPage - 支援物件或 JSON 字串輸入
+function showModifyPage(bEncoded) {
+  let b;
+  try { b = typeof bEncoded === 'object' ? bEncoded : JSON.parse(bEncoded); } catch(e) { alert('無法載入訂單資料'); return; }
+  const dateStr = formatDateStr(b.date);
+  modifyBookingId    = b.bookingId;
+  modifyCurrentDate  = dateStr;
+  modifySelections   = {};
+  modifyYear         = parseInt(dateStr.split('/')[0]);
+  modifyMonth        = parseInt(dateStr.split('/')[1]);
+  document.getElementById('modify-name').value  = b.name  || '';
+  document.getElementById('modify-phone').value = b.phone || '';
+  document.getElementById('modify-email').value = b.email || '';
+  document.getElementById('modify-notes').value = b.notes || '';
+  document.getElementById('modify-booking-id-label').textContent = b.bookingId;
+  document.getElementById('modify-date-display').textContent = dateStr + ' 入場';
+  document.getElementById('modify-month-label').textContent   = modifyYear + ' 年 ' + modifyMonth + ' 月';
+  document.getElementById('modify-date-picker').style.display = 'none';
+  document.getElementById('main-app').style.display    = 'none';
+  document.getElementById('page-modify').style.display = 'block';
+  loadModifyCampsites(dateStr, b.items || []);
+}
+
+// ────────────────────────────────────────────────
+// 修改訂單
+// ────────────────────────────────────────────────
+let modifyBookingId = null;
+let modifyCurrentDate = null;
+let modifyCampsiteData = [];
+let modifySelections = {};
+let modifyYear = new Date().getFullYear();
+let modifyMonth = new Date().getMonth() + 1;
+
+function closeModifyPage() {
+  document.getElementById('page-modify').style.display = 'none';
+  document.getElementById('main-app').style.display    = 'block';
+  if(isAdminMode){isAdminMode=false;switchTab('admin');}
+  else{switchTab('mybookings');}
+}
+
+function toggleModifyDatePicker() {
+  const dp = document.getElementById('modify-date-picker');
+  dp.style.display = dp.style.display === 'none' ? 'block' : 'none';
+  if (dp.style.display === 'block') loadModifyDates();
+}
+
+async function loadModifyDates() {
+  document.getElementById('modify-month-label').textContent = modifyYear + ' 年 ' + modifyMonth + ' 月';
+  document.getElementById('modify-date-list').innerHTML = '<div style="padding:12px;color:var(--gray-mid);font-size:13px;">載入中...</div>';
+  try {
+    const r = await fetch(API_URL + '?action=getDates&year=' + modifyYear + '&month=' + String(modifyMonth).padStart(2,'0'));
+    const d = await r.json();
+    if (!d.success || !d.dates.length) {
+      document.getElementById('modify-date-list').innerHTML = '<div style="padding:12px;color:var(--gray-mid);font-size:13px;">本月無可預約日期</div>';
+      return;
+    }
+    const days = ['日','一','二','三','四','五','六'];
+    const today = new Date(); today.setHours(0,0,0,0);
+    let html = '';
+    d.dates.forEach(dt => {
+      const p = dt.date.split('/');
+      const dateObj = new Date(p[0], p[1]-1, p[2]);
+      if (dateObj < today) return;
+      const dow = dateObj.getDay();
+      const label = p[1] + '月' + p[2] + '日（' + days[dow] + '）';
+      const isSelected = dt.date === modifyCurrentDate;
+      html += '<div style="padding:12px 14px;border-bottom:0.5px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:'+(isSelected?'var(--green-pale)':'#fff')+'" onclick="selectModifyDate(''+dt.date+'',''+label+'')">';
+      html += '<span style="font-size:14px;font-weight:'+(isSelected?'700':'400')+';">'+label+'</span>';
+      if (isSelected) html += '<span style="color:var(--green-mid);font-weight:700;font-size:12px;">✓ 目前</span>';
+      html += '</div>';
+    });
+    document.getElementById('modify-date-list').innerHTML = html || '<div style="padding:12px;color:var(--gray-mid);font-size:13px;">無可預約日期</div>';
+  } catch(e) {
+    document.getElementById('modify-date-list').innerHTML = '<div style="padding:12px;color:var(--gray-mid);">載入失敗</div>';
+  }
+}
+
+function changeModifyMonth(dir) {
+  modifyMonth += dir;
+  if (modifyMonth > 12) { modifyMonth = 1; modifyYear++; }
+  if (modifyMonth < 1)  { modifyMonth = 12; modifyYear--; }
+  loadModifyDates();
+}
+
+async function selectModifyDate(date, label) {
+  modifyCurrentDate = date;
+  document.getElementById('modify-date-display').textContent = label + ' 入場';
+  document.getElementById('modify-date-picker').style.display = 'none';
+  modifySelections = {};
+  await loadModifyCampsites(date, []);
+}
+
+async function loadModifyCampsites(date, preItems) {
+  document.getElementById('modify-campsite-list').innerHTML = '<div style="color:var(--gray-mid);font-size:13px;">載入中...</div>';
+  try {
+    const url = API_URL + '?action=getAvailability&date=' + date + '&excludeBookingId=' + encodeURIComponent(modifyBookingId);
+    const r = await fetch(url);
+    const d = await r.json();
+    if (!d.success) throw new Error(d.message);
+    modifyCampsiteData = d.campsites;
+
+    // Pre-fill selections from current booking items
+    modifySelections = {};
+    preItems.forEach(item => {
+      const c = modifyCampsiteData.find(c => c.name === item.name);
+      if (c) modifySelections[c.id] = item.qty;
+    });
+
+    renderModifyCampsites();
+  } catch(e) {
+    document.getElementById('modify-campsite-list').innerHTML = '<div style="color:var(--gray-mid);font-size:13px;">載入失敗，請重試</div>';
+  }
+}
+
+function renderModifyCampsites() {
+  let html = '';
+  modifyCampsiteData.forEach(c => {
+    const qty  = modifySelections[c.id] || 0;
+    const full = c.remaining <= 0 && qty === 0;
+    html += '<div class="campsite-row'+(full?' sold-out':'')+(qty>0?' selected':'')+'" id="mcamp-'+c.id+'">';
+    html += '<div class="campsite-info"><div><div class="campsite-name">'+c.name+'</div>';
+    if (full) html += '<div class="campsite-sub" style="color:var(--red-dark);font-weight:700;">已額滿</div>';
+    else html += '<div class="campsite-sub">剩 <span style="color:var(--green-mid);font-weight:700;">'+(c.remaining + qty)+'</span> 帳（扣除自己訂的）</div>';
+    html += '</div>';
+    html += '<div class="campsite-price">NT$'+c.price.toLocaleString()+' <span style="font-size:11px;font-weight:400;color:var(--gray-mid);">/ 晚</span></div></div>';
+    if (!full || qty > 0) {
+      html += '<div class="qty-control">';
+      html += '<button class="qty-btn minus'+(qty>0?' active':'')+'" onclick="changeModifyQty(''+c.id+'',-1)"'+(qty===0?' disabled':'')+'>−</button>';
+      html += '<span class="qty-num" id="mqty-'+c.id+'">'+qty+'</span>';
+      const maxQty = c.remaining + qty;
+      html += '<button class="qty-btn plus" onclick="changeModifyQty(''+c.id+'',1)"'+(qty>=maxQty?' disabled':'')+'>+</button>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  document.getElementById('modify-campsite-list').innerHTML = html || '<div style="color:var(--gray-mid);font-size:13px;">無可選帳位</div>';
+  updateModifyTotal();
+}
+
+function changeModifyQty(id, delta) {
+  const c = modifyCampsiteData.find(c => c.id === id);
+  if (!c) return;
+  const cur = modifySelections[id] || 0;
+  const max = c.remaining + cur;
+  const nq  = Math.max(0, Math.min(max, cur + delta));
+  if (nq === 0) delete modifySelections[id]; else modifySelections[id] = nq;
+  document.getElementById('mqty-'+id).textContent = nq;
+  const row = document.getElementById('mcamp-'+id);
+  nq > 0 ? row.classList.add('selected') : row.classList.remove('selected');
+  const mb = row.querySelector('.qty-btn.minus');
+  const pb = row.querySelector('.qty-btn.plus');
+  mb.disabled = nq === 0; nq===0?mb.classList.remove('active'):mb.classList.add('active');
+  pb.disabled = nq >= max;
+  updateModifyTotal();
+}
+
+function updateModifyTotal() {
+  let total = 0;
+  Object.keys(modifySelections).forEach(id => {
+    const c = modifyCampsiteData.find(c => c.id === id);
+    if (c && modifySelections[id] > 0) total += c.price * modifySelections[id];
+  });
+  const box = document.getElementById('modify-total-box');
+  if (total > 0) {
+    box.style.display = 'block';
+    document.getElementById('modify-total-amount').textContent = 'NT$' + total.toLocaleString();
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+async function submitModify() {
+  const name  = document.getElementById('modify-name').value.trim();
+  const phone = document.getElementById('modify-phone').value.trim();
+  const email = document.getElementById('modify-email').value.trim();
+  const notes = document.getElementById('modify-notes').value.trim();
+  if (!name)  { alert('請輸入姓名'); return; }
+  if (!phone) { alert('請輸入電話'); return; }
+  const items = Object.keys(modifySelections).map(id => ({ id, qty: modifySelections[id] }));
+  if (!items.length) { alert('請至少選擇一個帳位'); return; }
+  const btn = document.getElementById('btn-modify-submit');
+  btn.disabled = true; btn.textContent = '修改中...';
+  try {
+    const r = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'modifyBooking',
+        bookingId: modifyBookingId,
+        lineUid: lineProfile ? lineProfile.userId : '',
+        name, phone, email, notes,
+        date: modifyCurrentDate, items
+      })
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.message);
+    alert('訂單修改成功！');
+    closeModifyPage();
+  } catch(e) {
+    alert('修改失敗：' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = '確認修改';
+  }
+}
+
+// ────────────────────────────────────────────────
+// 管理員面板
+// ────────────────────────────────────────────────
+async function loadAdminBookings(searchName) {
+  const container=document.getElementById('admin-content');
+  if(!isAdmin){container.innerHTML='<div class="empty">無管理員權限</div>';return;}
+  const sval=searchName!==undefined?searchName:(document.getElementById('admin-search')?document.getElementById('admin-search').value:'');
+  container.innerHTML='<div class="card" style="padding:10px 14px;margin-bottom:10px;"><div style="display:flex;gap:8px;align-items:center;"><input type="text" class="form-input" id="admin-search" placeholder="搜尋姓名或電話..." style="margin:0;flex:1;" value="'+encodeHTML(sval)+'"><button class="btn-primary" style="width:auto;padding:10px 14px;font-size:13px;" onclick="loadAdminBookings(document.getElementById(\'admin-search\').value)">搜尋</button></div></div><div class="loading"><div class="spinner"></div>載入中...</div>';
+  try{
+    const q=sval?'&searchName='+encodeURIComponent(sval):'';
+    const r=await fetch(API_URL+'?action=getAdminBookings&adminLineUid='+lineProfile.userId+q);
+    const d=await r.json();
+    if(!d.success)throw new Error(d.message);
+    adminBookings=d.bookings;
+    renderAdminBookings(d.bookings,sval);
+  }catch(e){document.getElementById('admin-content').innerHTML='<div class="empty">載入失敗：'+e.message+'</div>';}
+}
+
+function encodeHTML(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+function renderAdminBookings(bookings,searchName){
+  const container=document.getElementById('admin-content');
+  const today=new Date();today.setHours(0,0,0,0);
+  const sval=searchName||'';
+  let html='<div class="card" style="padding:10px 14px;margin-bottom:10px;"><div style="display:flex;gap:8px;align-items:center;"><input type="text" class="form-input" id="admin-search" placeholder="搜尋姓名或電話..." style="margin:0;flex:1;" value="'+encodeHTML(sval)+'" onkeydown="if(event.key===\'Enter\')loadAdminBookings(this.value)"><button class="btn-primary" style="width:auto;padding:10px 14px;font-size:13px;" onclick="loadAdminBookings(document.getElementById(\'admin-search\').value)">搜尋</button></div><div style="margin-top:8px;font-size:11px;color:var(--gray-mid);">'+(sval?'「'+sval+'」搜尋結果':'今日起所有訂單')+' — 共 '+bookings.length+' 筆</div></div>';
+  if(!bookings.length){container.innerHTML=html+'<div class="empty">找不到訂單</div>';return;}
+  bookings.forEach((b,idx)=>{
+    const dateStr=formatDateStr(b.date);
+    const p=dateStr.split('/');
+    const bd=new Date(p[0],p[1]-1,p[2]);
+    const isCancelled=b.status==='已取消';
+    const isPast=bd<today&&!isCancelled;
+    const tc=isCancelled?'tag-cancelled':(isPast?'tag-ended':'tag-upcoming');
+    const tt=isCancelled?'已取消':(isPast?'已結束':'即將入場');
+    html+='<div class="booking-card'+(isCancelled||isPast?' past':'')+'"><div class="booking-header"><div><div class="booking-date">'+dateStr+'</div><div class="booking-id-text">'+b.bookingId+'</div></div><span class="tag '+tc+'">'+tt+'</span></div>';
+    html+='<div style="border-top:0.5px solid #F0F0F0;padding-top:10px;">';
+    html+='<div class="booking-detail-row"><span style="color:var(--text-mid);">姓名</span><span style="font-weight:700;">'+(b.name||'')+'</span></div>';
+    html+='<div class="booking-detail-row"><span style="color:var(--text-mid);">電話</span><span>'+(b.phone||'')+'</span></div>';
+    b.details.split(',').forEach(item=>{if(item.trim())html+='<div class="booking-detail-row"><span>'+item.trim()+'</span></div>';});
+    html+='<div class="booking-detail-row total"><span>總金額</span><span>NT$'+Number(b.totalPrice).toLocaleString()+'</span></div>';
+    if(b.notes)html+='<div class="booking-detail-row"><span style="color:var(--text-mid);">備註</span><span style="color:var(--red-dark);font-weight:700;">'+b.notes+'</span></div>';
+    html+='</div>';
+    if(!isCancelled)html+='<div style="display:flex;gap:8px;margin-top:10px;"><button style="flex:1;padding:10px;background:var(--green-mid);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;" onclick="adminEditBooking('+idx+')">✏️ 修改</button><button class="btn-danger" style="flex:1;margin:0;" onclick="adminCancelBooking(\''+b.bookingId+'\',\''+encodeHTML(b.name||'')+'\')">取消訂單</button></div>';
+    html+='</div>';
+  });
+  container.innerHTML=html;
+}
+
+function adminEditBooking(idx){
+  const b=adminBookings[idx];
+  if(!b)return;
+  isAdminMode=true;
+  showModifyPage(b);
+}
+
+async function adminCancelBooking(bookingId,name){
+  if(!confirm('確定要取消 '+name+' 的訂位嗎？\n客人將收到取消通知。'))return;
+  try{
+    const r=await fetch(API_URL+'?action=cancelBooking&bookingId='+bookingId+'&lineUid='+lineProfile.userId);
+    const d=await r.json();
+    if(!d.success)throw new Error(d.message);
+    alert('訂位已取消，客人已收到通知');
+    loadAdminBookings();
+  }catch(e){alert('取消失敗：'+e.message);}
+}
+
+// ────────────────────────────────────────────────
+// 頁面說明動態載入（從 Google Sheet 讀取）
+// ────────────────────────────────────────────────
+async function loadPageContent(){
+  try{
+    const r=await fetch(API_URL+'?action=getPageContent');
+    const d=await r.json();
+    if(!d.success||!d.content)return;
+    const c=d.content;
+    const el=document.getElementById('info-dynamic-content');
+    if(!el)return;
+    let html='';
+    const renderSection=(title,content)=>{
+      const lines=content.split('\n').map(l=>l.trim()).filter(l=>l);
+      const items=lines.map(l=>{
+        const m=l.match(/^(\d+\.|★|\*|-|·|•)\s*(.*)/);
+        const dot=m?m[1]:'·';const text=m?m[2]:l;
+        return'<div class="info-item"><span class="info-item-dot">'+dot+'</span><span>'+text+'</span></div>';
+      }).join('');
+      return'<div class="info-section"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div class="info-bar"></div><span style="font-size:14px;font-weight:700;color:var(--green-dark);">'+title+'</span></div><div class="info-text">'+items+'</div></div>';
+    };
+    ['進退場時間','草皮說明','小屋說明','營區規定','退訂政策'].forEach(key=>{
+      if(c[key])html+=renderSection(key,c[key]);
+    });
+    if(html)el.innerHTML=html;
+  }catch(e){console.log('頁面內容載入失敗:',e.message);}
 }
 
 init();
